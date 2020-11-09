@@ -55,11 +55,16 @@ class Oirreader:
         if self.blocks is None:
             self.blocks, _ = self.find_blocks(self.metadata['NumberOfChannels'])
 
-        bytes_per_block = int(width * height/len(self.blocks))
+        #bytes_per_block = int(width * height/len(self.blocks))
         image_tot = np.zeros((height, width), dtype=np.uint16)
-        lines_per_block = int(height/len(self.blocks))
+        #lines_per_block = int(height/len(self.blocks))
         with open(self.filepath, 'rb') as f:
             for i in range(len(self.blocks)):
+
+                f.seek(self.blocks[i][channel]-14)
+                bytes_per_block = int(struct.unpack('<'+str(1)+'H', f.read(2))[0]/2)
+                lines_per_block = int(bytes_per_block/width)
+
                 f.seek(self.blocks[i][channel]-6)
 
                 im_bytes = struct.unpack('<'+str(bytes_per_block)+'H', f.read(2*bytes_per_block))
