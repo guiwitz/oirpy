@@ -1,13 +1,8 @@
-from setuptools import setup, find_packages
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from setuptools import setup
 
-setup(name='oirpy',
-      version='0.0.0',
-      description='Read oir files',
-      url='',
-      author='Guillaume Witz',
-      author_email='',
-      license='BSD3',
-      packages=find_packages(),
-      zip_safe=False,
-      install_requires=['numpy']
-      )
+
+# https://github.com/pypa/setuptools_scm
+use_scm = {"write_to": "src/oirpy/_version.py"}
+setup(use_scm_version=use_scm)
